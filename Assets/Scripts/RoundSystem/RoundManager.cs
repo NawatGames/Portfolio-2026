@@ -37,7 +37,7 @@ public class RoundManager : MonoBehaviour
         EndOfRound?.Invoke();
     }
     
-    private void Oestroy()
+    private void OnDestroy()
     {
         if(Instance == this)
         {
