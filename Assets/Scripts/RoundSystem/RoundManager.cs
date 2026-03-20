@@ -10,6 +10,7 @@ using UnityEngine;
 /// Functions: RoundStart(), RoundEnd() <br/>
 /// Triggering the Events: RoundManager.Instance.Round[Start/End]()
 /// </remarks>
+[DefaultExecutionOrder(-1000)]
 public class RoundManager : MonoBehaviour
 {
     public static RoundManager Instance {get; private set;}
