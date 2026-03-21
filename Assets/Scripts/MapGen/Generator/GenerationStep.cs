@@ -20,7 +20,7 @@ namespace MapGen.Generator
             {
                 for (int j = 0; j < config.size.x; j++)
                 {
-                    ProcessTile(ref map[i, j], new Vector2Int(j, i));
+                    ProcessTile(ref map[i, j], new Vector2Int(i, j));
                 }
             }
         }

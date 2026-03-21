@@ -25,7 +25,7 @@ namespace MapGen.Generator
 
         public void Generate()
         {
-            _map = new GenerationTile[profile.config.size.x, profile.config.size.y];
+            _map = new GenerationTile[profile.config.size.y, profile.config.size.x];
             foreach (var generationStep in profile.pipeline)
             {
                 generationStep.Run(profile.config, _map);
