@@ -7,6 +7,7 @@ namespace MapGen.Generator.Steps
     public class NoiseStep : GenerationStep
     {
         [SerializeField] private int offsetRange = 10;
+        [SerializeField] private float noiseOffsetDivider = 1f;
         
         private System.Random _rand;
         private Vector2 _offset;
@@ -27,7 +28,7 @@ namespace MapGen.Generator.Steps
 
         protected override void ProcessTile(ref GenerationTile tile, Vector2Int position)
         {
-            Vector2 localOffset = (Vector2)position / 10f;
+            Vector2 localOffset = (Vector2)position / noiseOffsetDivider;
             Vector2 noisePosition = _offset + localOffset;
             tile.Height = Mathf.PerlinNoise(noisePosition.x, noisePosition.y);
         }
