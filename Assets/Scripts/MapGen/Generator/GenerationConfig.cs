@@ -7,7 +7,6 @@ namespace MapGen.Generator
     {
         public int seed;
         public Vector2Int size;
-        public int verticalSteps;
         public float spacing;
     }
 }
