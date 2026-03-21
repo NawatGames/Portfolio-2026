@@ -6,7 +6,6 @@ namespace MapGen.Generator.Steps
     [CreateAssetMenu(fileName = "NoiseGenerationStep", menuName = "GenerationStep/HeightStep", order = 0)]
     public class NoiseStep : GenerationStep
     {
-        [SerializeField] private float heightScale = 1f;
         [SerializeField] private int offsetRange = 10;
         
         private System.Random _rand;
@@ -30,7 +29,7 @@ namespace MapGen.Generator.Steps
         {
             Vector2 localOffset = (Vector2)position / 10f;
             Vector2 noisePosition = _offset + localOffset;
-            tile.Height = Mathf.PerlinNoise(noisePosition.x, noisePosition.y) * heightScale;
+            tile.Height = Mathf.PerlinNoise(noisePosition.x, noisePosition.y);
         }
     }
 }
