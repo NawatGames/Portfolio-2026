@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Subscriber : MonoBehaviour
 {
-    private int _round = 0;
     private void Start()
     {
         StartCoroutine(Loop());
@@ -11,20 +10,22 @@ public class Subscriber : MonoBehaviour
 
     IEnumerator Loop()
     {
+        Debug.Log("\tRound "+RoundManager.Instance.CurrentRound+" começou");
+        RoundManager.Instance.StartNewTurn();
+        yield return new WaitForSeconds(2);
         while (true)
         {
-            RoundManager.Instance.RoundStart();
+            RoundManager.Instance.EndTurn();
             yield return new WaitForSeconds(2);
-            RoundManager.Instance.RoundEnd();
-            yield return new WaitForSeconds(1);
         }
     }
     private void OnEnable()
     {
         if(RoundManager.Instance != null)
         {
-            RoundManager.Instance.StartOfRound += RoundStarted;
-            RoundManager.Instance.EndOfRound += RoundEnded;
+            RoundManager.Instance.OnRoundChanged += RoundChanged;
+            RoundManager.Instance.SubscribeToEnd(RoundTurn.player,TurnEnd);
+            RoundManager.Instance.SubscribeToEnd(RoundTurn.system,TurnEnd);
         }
     }
 
@@ -32,18 +33,21 @@ public class Subscriber : MonoBehaviour
     {
         if(RoundManager.Instance != null)
         {
-            RoundManager.Instance.StartOfRound -= RoundStarted;
-            RoundManager.Instance.EndOfRound -= RoundEnded;
+            RoundManager.Instance.OnRoundChanged -= RoundChanged;
+            RoundManager.Instance.UnsubscribeToEnd(RoundTurn.player,TurnEnd);
+            RoundManager.Instance.UnsubscribeToEnd(RoundTurn.system,TurnEnd);
         }
     }
 
-    private void RoundStarted()
+    private void TurnEnd()
     {
-        Debug.Log("Round "+_round+" começou");
+        Debug.Log("\nMudando de turno\n");
     }
-    private void RoundEnded()
+    private void RoundChanged(int round)
     {
-        Debug.Log("Round "+_round+" terminou");
-        _round++;
+        int previous = round - 1;
+        Debug.Log("\tRound "+previous+" terminou");
+        Debug.Log("\tRound "+round+" começou");
     }
+
 }

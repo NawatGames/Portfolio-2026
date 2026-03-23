@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class SecondListener : MonoBehaviour
@@ -6,8 +7,10 @@ public class SecondListener : MonoBehaviour
     {
         if(RoundManager.Instance != null)
         {
-            RoundManager.Instance.StartOfRound += RoundStarted;
-            RoundManager.Instance.EndOfRound += RoundEnded;
+            RoundManager.Instance.SubscribeToStart(RoundTurn.player,PlayerTurnStart);
+            RoundManager.Instance.SubscribeToEnd(RoundTurn.player,PlayerTurnEnd);
+            RoundManager.Instance.SubscribeToStart(RoundTurn.system,SystemTurnStart);
+            RoundManager.Instance.SubscribeToEnd(RoundTurn.system,SystemTurnEnd);
         }
     }
 
@@ -15,17 +18,30 @@ public class SecondListener : MonoBehaviour
     {
         if(RoundManager.Instance != null)
         {
-            RoundManager.Instance.StartOfRound -= RoundStarted;
-            RoundManager.Instance.EndOfRound -= RoundEnded;
+            RoundManager.Instance.UnsubscribeToStart(RoundTurn.player,PlayerTurnStart);
+            RoundManager.Instance.UnsubscribeToEnd(RoundTurn.player,PlayerTurnEnd);
+            RoundManager.Instance.UnsubscribeToStart(RoundTurn.system,SystemTurnStart);
+            RoundManager.Instance.UnsubscribeToEnd(RoundTurn.system,SystemTurnEnd);
         }
     }
 
-    private void RoundStarted()
+    private void PlayerTurnStart()
     {
-        Debug.Log("\t Me chamaram no inicio");
+        Debug.Log("Ola player");
     }
-    private void RoundEnded()
+
+    private void PlayerTurnEnd()
     {
-        Debug.Log("\t Me chamaram no fim");
+        Debug.Log("Tchau player");
+    }
+
+    private void SystemTurnStart()
+    {
+        Debug.Log("Ola Sistema");
+    }
+
+    private void SystemTurnEnd()
+    {
+        Debug.Log("Tchau Sistema");
     }
 }
