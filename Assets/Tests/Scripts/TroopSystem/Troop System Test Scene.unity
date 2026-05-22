@@ -284,6 +284,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VisibleReach
   _reach: {fileID: 522605528}
   _movement: {fileID: 522605529}
+  _inputManager: {fileID: 1323337269}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!120 &522605526
 LineRenderer:

@@ -6,6 +6,8 @@ public class VisibleReach : MonoBehaviour
     [SerializeField] private Reach _reach;
     [SerializeField] private Movement _movement;
 
+    // variavel por causa de erros de localizar Input manager
+    [SerializeField] private InputManager _inputManager;
     private int _segments = 4; // quadrado
 
     private LineRenderer _line;
@@ -21,6 +23,10 @@ public class VisibleReach : MonoBehaviour
     private Color originalColor;
     private MeshRenderer meshRenderer;
 
+    void Awake()
+    {
+        
+    }
     void Start()
     {
         if (_reach == null){
@@ -31,6 +37,9 @@ public class VisibleReach : MonoBehaviour
             try{_movement = GetComponent<Movement>();}
             catch{Debug.LogError("Unable to find Movement script");}
         }
+
+         // variavel por causa de erros de localizar Input manager
+         if (_inputManager == null){Debug.LogError("InputManger not added");}
 
         _gameObject = gameObject;
         _isSelected = false;
@@ -46,12 +55,12 @@ public class VisibleReach : MonoBehaviour
     }
 
     private void OnEnable(){
-        InputManager.Instance.OnLeftClick += HandleLeftClick;
+        _inputManager.OnLeftClick += HandleLeftClick;
     }
 
     private void OnDestroy(){
-        if (InputManager.Instance != null){
-            InputManager.Instance.OnLeftClick -= HandleLeftClick;
+        if (_inputManager != null){
+            _inputManager.OnLeftClick -= HandleLeftClick; // InputManager.Instance.OnLeftClick 
         }
     }
 
@@ -90,7 +99,7 @@ public class VisibleReach : MonoBehaviour
         }
         else if (_isSelected) {
             // pegando posicao do mouse
-            Vector2 mousePos = InputManager.Instance.MousePosition;
+            Vector2 mousePos = _inputManager.MousePosition; //InputManager.Instance.Mouseposition
             Ray ray = Camera.main.ScreenPointToRay(mousePos);
             if (Physics.Raycast(ray, out RaycastHit hit)){
                 // movimentação
