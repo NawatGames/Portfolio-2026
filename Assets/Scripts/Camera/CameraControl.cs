@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 
-namespace Camera
+namespace CameraSystem
 {
     [RequireComponent(typeof(UnityEngine.Camera))]
     public class CameraControl : MonoBehaviour
