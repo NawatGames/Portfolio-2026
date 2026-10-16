@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -5,6 +6,8 @@ public class Movement : MonoBehaviour
     [SerializeField] private Reach _reach;
 
     private GameObject _gameObject;
+
+    public event Action MovementStart, MovementEnd;
 
     private void Start(){
         if (_reach == null){
@@ -14,9 +17,12 @@ public class Movement : MonoBehaviour
         _gameObject = gameObject;
     }
     public void MoveTroop(Vector3 pos){
+        MovementStart?.Invoke();
         if (_reach.IsInReach(pos)){
             _gameObject.transform.position = pos;
             Debug.Log("Moving");
         }
+        MovementEnd?.Invoke();
     }
+
 }
